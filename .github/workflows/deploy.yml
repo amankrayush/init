@@ -23,9 +23,9 @@ jobs:
         run: sleep 15s
       - name: extract publicDnsName value
         run: |
-          var=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
-          echo $var
-          echo '::set-output name=publicDnsName::'$var
+          publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+          echo $publicDnsName
+          echo '::set-output name=publicDnsName::'$publicDnsName
         id: get-publicDnsName
       - name: Sleep for 5 seconds
         run: sleep 5s
@@ -41,5 +41,3 @@ jobs:
           sh ./scripts/download_models.sh english
           docker-compose pull
           docker-compose up -d
-      - name: Job Completed
-        run: echo "Hello"
