@@ -27,7 +27,7 @@ jobs:
         run: |
           var=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
           echo $var
-          echo '::set-output name=SELECTED_COLOR::'$var
+          echo '::set-output name=publicDnsName::'$var
         id: random-color-generator
         shell: bash
       - name: Sleep for 5 seconds
