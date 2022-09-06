@@ -31,7 +31,9 @@ jobs:
         shell: bash
       - name: deploy speech-assistant
         run: |
-          echo 
+          echo "Hello"
+          echo $publicDnsName
+          echo "World !! "
           sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem" ec2-user@$publicDnsName <<EOF
             rm -rf speech-assistant-package
             sudo service docker start
