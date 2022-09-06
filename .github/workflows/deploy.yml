@@ -24,7 +24,7 @@ jobs:
         run: sleep 15s
         shell: bash
       - name: extract publicDnsName value
-        run: echo '::set-output name=publicDnsName::$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '\"')'
+        run: echo '::set-output name=publicDnsName::$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')'
         id: random-color-generator
         shell: bash
       - name: Sleep for 5 seconds
@@ -33,7 +33,6 @@ jobs:
       - name: deploy speech-assistant
         run: |
           echo "Hello"
-          echo ${{ steps.random-color-generator.outputs.publicDnsName }}
           echo "World !! "
           sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem" ec2-user@${{ steps.random-color-generator.outputs.publicDnsName }} <<EOF
             rm -rf speech-assistant-package
