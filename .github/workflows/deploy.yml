@@ -24,7 +24,10 @@ jobs:
         run: sleep 15s
         shell: bash
       - name: extract publicDnsName value
-        run: echo '::set-output name=publicDnsName::'$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+        run: |
+          var=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+          echo $var
+          echo '::set-output name=SELECTED_COLOR::'$var
         id: random-color-generator
         shell: bash
       - name: Sleep for 5 seconds
@@ -32,9 +35,9 @@ jobs:
         shell: bash
       - name: Set selected color
         run: |
-          var="Green"
-          echo $var
-          echo '::set-output name=SELECTED_COLOR::'$var
+          var1="Green"
+          echo $var1
+          echo '::set-output name=SELECTED_COLOR::'$var1
         id: random-color-generator1
       - name: Get color
         run: echo "${{ steps.random-color-generator1.outputs.SELECTED_COLOR }}"
