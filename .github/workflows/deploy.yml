@@ -32,7 +32,7 @@ jobs:
       - name: deploy speech-assistant
         run: |
           echo 
-          sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speechassistantec2.pem" ec2-user@$publicDnsName <<EOF
+          sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem.pem" ec2-user@$publicDnsName <<EOF
             rm -rf speech-assistant-package
             sudo service docker start
             git clone https://github.com/Bahmni/speech-assistant-package.git
