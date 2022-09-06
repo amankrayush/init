@@ -34,7 +34,7 @@ jobs:
         run: |
           var="Green"
           echo $var
-          echo '::set-output name=SELECTED_COLOR::'"$var"'
+          echo '::set-output name=SELECTED_COLOR::'$var
         id: random-color-generator1
       - name: Get color
         run: echo "${{ steps.random-color-generator1.outputs.SELECTED_COLOR }}"
