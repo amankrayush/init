@@ -23,8 +23,9 @@ jobs:
       - name: Sleep for 30 seconds
         run: sleep 15s
         shell: bash
-      - name: extract publicDnsName key
-        run: publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+      - name: extract publicDnsName value
+        run: echo '::set-output name=publicDnsName::$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')'
+        id: random-color-generator
         shell: bash
       - name: Sleep for 5 seconds
         run: sleep 5s
@@ -32,9 +33,9 @@ jobs:
       - name: deploy speech-assistant
         run: |
           echo "Hello"
-          echo $publicDnsName
+          echo ${{ steps.random-color-generator.outputs.publicDnsName }}
           echo "World !! "
-          sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem" ec2-user@$publicDnsName <<EOF
+          sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem" ec2-user@${{ steps.random-color-generator.outputs.publicDnsName }} <<EOF
             rm -rf speech-assistant-package
             sudo service docker start
             git clone https://github.com/Bahmni/speech-assistant-package.git
