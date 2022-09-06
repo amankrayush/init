@@ -9,6 +9,12 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.BAHMNI_AWS_ID }}
+          aws-secret-access-key: ${{ secrets.BAHMNI_AWS_SECRET }}
+          aws-region: ap-south-1
       - name: extract private key
         run: 'echo "$SSH_KEY" > speech-assistant.pem'
         shell: bash
