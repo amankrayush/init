@@ -1,0 +1,37 @@
+name: Deploy Speech-Assistant-Package
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: extract private key
+        run: 'echo "$SSH_KEY" > speech-assistant.pem'
+        shell: bash
+        env:
+          SSH_KEY: ${{secrets.SPEECH_ASSISTANT_PEM}}
+      - name: Sleep for 30 seconds
+        run: sleep 15s
+        shell: bash
+      - name: extract publicDnsName key
+        run: publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+        shell: bash
+      - name: Sleep for 5 seconds
+        run: sleep 5s
+        shell: bash
+      - name: deploy speech-assistant
+        run: |
+          echo 
+          sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speechassistantec2.pem" ec2-user@$publicDnsName <<EOF
+            rm -rf speech-assistant-package
+            sudo service docker start
+            git clone https://github.com/Bahmni/speech-assistant-package.git
+            cd speech-assistant-package
+            sh ./scripts/download_models.sh english
+            docker-compose pull
+            docker-compose up -d
+          EOF
