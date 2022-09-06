@@ -17,22 +17,18 @@ jobs:
           aws-region: ap-south-1
       - name: extract private key
         run: 'echo "$SSH_KEY" > speech-assistant.pem'
-        shell: bash
         env:
           SSH_KEY: ${{secrets.SPEECH_ASSISTANT_PEM}}
       - name: Sleep for 30 seconds
         run: sleep 15s
-        shell: bash
       - name: extract publicDnsName value
         run: |
           var=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
           echo $var
           echo '::set-output name=publicDnsName::'$var
         id: get-publicDnsName
-        shell: bash
       - name: Sleep for 5 seconds
         run: sleep 5s
-        shell: bash
       - name: deploy speech-assistant
         run: |
           echo "${{ steps.get-publicDnsName.outputs.publicDnsName }}"  
@@ -47,4 +43,3 @@ jobs:
             docker-compose pull
             docker-compose up -d
           EOF
-        shell: bash
