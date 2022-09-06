@@ -41,6 +41,7 @@ jobs:
             rm -rf speech-assistant-package
             sudo service docker start
             git clone https://github.com/Bahmni/speech-assistant-package.git
+            git checkout BAH-1904
             cd speech-assistant-package
             sh ./scripts/download_models.sh english
             docker-compose pull
