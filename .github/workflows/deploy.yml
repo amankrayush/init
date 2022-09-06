@@ -37,9 +37,9 @@ jobs:
         run: echo "The selected color is ${{ steps.random-color-generator1.outputs.SELECTED_COLOR }}"
       - name: deploy speech-assistant
         run: |
-          echo "Hello"
-          echo $steps.random-color-generator.outputs.publicDnsName
-          echo "World !! "
+          echo "Hello" <<EOF
+          echo "${{ steps.random-color-generator.outputs.publicDnsName }}" <<EOF
+          echo "World !! " <<EOF
           sudo ssh -T -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ssh -i "speech-assistant.pem" ec2-user@"${{ steps.random-color-generator.outputs.publicDnsName }}" <<EOF
             rm -rf speech-assistant-package
             sudo service docker start
