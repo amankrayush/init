@@ -31,7 +31,9 @@ jobs:
         run: sleep 5s
         shell: bash
       - name: Set selected color
-        run: echo '::set-output name=SELECTED_COLOR::green'
+        run: |
+          var="Green"
+          echo '::set-output name=SELECTED_COLOR::$var'
         id: random-color-generator1
       - name: Get color
         run: echo "${{ steps.random-color-generator1.outputs.SELECTED_COLOR }}"
