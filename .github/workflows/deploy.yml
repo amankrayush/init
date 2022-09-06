@@ -19,19 +19,15 @@ jobs:
         run: 'echo "$SSH_KEY" > speech-assistant.pem'
         env:
           SSH_KEY: ${{secrets.SPEECH_ASSISTANT_PEM}}
-      - name: Sleep for 30 seconds
+      - name: Sleep for 15 seconds
         run: sleep 15s
       - name: extract publicDnsName value
         run: |
           publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
-          echo $publicDnsName
           echo '::set-output name=publicDnsName::'$publicDnsName
         id: get-publicDnsName
-      - name: Sleep for 5 seconds
-        run: sleep 5s
       - name: deploy speech-assistant
-        run: |
-          echo "${{ steps.get-publicDnsName.outputs.publicDnsName }}"  
+        run: | 
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
           rm -rf speech-assistant-package
           sudo service docker start
