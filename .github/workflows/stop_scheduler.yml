@@ -3,8 +3,10 @@ name: Stop EC2 machine in AWS
 on:
   workflow_dispatch:
   schedule:
-    # Runs "At 07:00 PM on every day-of-week from Monday through Friday. Below time is mentioned in UTC time zone" (see https://crontab.guru)
+    # Runs "At 07:00 PM IST on every day-of-week from Monday through Friday. Below time is mentioned in UTC time zone" (see https://crontab.guru)
     - cron: '30 13 * * 1-5'
+env:
+  INSTANACE_ID: ***REMOVED***
 
 jobs:
   start-rds:
@@ -19,5 +21,4 @@ jobs:
           aws-region: ap-south-1
 
       - name: Stop EC2 Instance
-        run: |
-          aws ec2 stop-instances --instance-ids ***REMOVED***
+        run: aws ec2 stop-instances --instance-ids $INSTANACE_ID
