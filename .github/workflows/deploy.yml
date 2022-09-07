@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+      
+env:
+  INSTANACE_ID: ***REMOVED***
 
 jobs:
   deploy:
@@ -23,15 +26,13 @@ jobs:
         run: sleep 15s
       - name: extract publicDnsName value
         run: |
-          publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+          publicDnsName=$(aws ec2 describe-instances --instance-ids $INSTANACE_ID | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
           echo '::set-output name=publicDnsName::'$publicDnsName
         id: get-publicDnsName
       - name: deploy speech-assistant
         run: | 
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
-          sudo rm -rf speech-assistant-package
-          sudo service docker start
-          git clone https://github.com/Bahmni/speech-assistant-package.git
+          git pull https://github.com/Bahmni/speech-assistant-package.git
           cd speech-assistant-package
           git checkout BAH-1904
           sh ./scripts/download_models.sh english
