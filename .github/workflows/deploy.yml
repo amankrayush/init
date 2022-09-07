@@ -29,7 +29,7 @@ jobs:
       - name: deploy speech-assistant
         run: | 
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
-          rm -rf speech-assistant-package
+          sudo rm -rf speech-assistant-package
           sudo service docker start
           git clone https://github.com/Bahmni/speech-assistant-package.git
           cd speech-assistant-package
