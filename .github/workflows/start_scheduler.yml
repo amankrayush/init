@@ -19,5 +19,25 @@ jobs:
           aws-region: ap-south-1
 
       - name: Start EC2 Instance
+        run: aws ec2 start-instances --instance-ids ***REMOVED***
+      - name: extract private key
+        run: 'echo "$SSH_KEY" > speech-assistant.pem'
+        env:
+          SSH_KEY: ${{secrets.SPEECH_ASSISTANT_PEM}}
+      - name: Sleep for 15 seconds
+        run: sleep 15s
+      - name: extract publicDnsName value
         run: |
-          aws ec2 start-instances --instance-ids ***REMOVED***
+          publicDnsName=$(aws ec2 describe-instances --instance-ids ***REMOVED*** | jq '.Reservations[0].Instances[0].PublicDnsName' | tr -d '"')
+          echo '::set-output name=publicDnsName::'$publicDnsName
+        id: get-publicDnsName
+      - name: start docker containers
+        run: | 
+          sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
+          sudo service docker start
+          cd bahmni-package/bahmni-docker/
+          docker-compose up -d
+          cd ../..
+          cd speech-assistant-package
+          git checkout BAH-1904
+          docker-compose up -d
