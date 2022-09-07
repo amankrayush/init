@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      
+
 env:
   INSTANACE_ID: ***REMOVED***
 
@@ -34,7 +34,6 @@ jobs:
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
           git pull https://github.com/Bahmni/speech-assistant-package.git
           cd speech-assistant-package
-          git checkout BAH-1904
           sh ./scripts/download_models.sh english
           docker-compose pull
           docker-compose up -d
