@@ -3,9 +3,8 @@ name: Start EC2 machine in AWS
 on:
   workflow_dispatch:
   schedule:
-    # Runs "At 09:00 AM IST on every day-of-week from Monday through Friday. Below time is mentioned in UTC time zone" (see https://crontab.guru)
-    - cron: '30 6 * * 1-5'
-
+    # Runs "At 07:00 PM IST on every day-of-week from Monday through Friday. Below time is mentioned in UTC time zone" (see https://crontab.guru)
+    - cron: '0 7 * * 1-5'
 env:
   INSTANACE_ID: ***REMOVED***
 
