@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Runs "At 09:00 AM IST on every day-of-week from Monday through Friday. Below time is mentioned in UTC time zone" (see https://crontab.guru)
-    - cron: '0 4 * * 1-5'
+    - cron: '0 5 * * 1-5'
 
 env:
   INSTANACE_ID: ***REMOVED***
