@@ -38,5 +38,4 @@ jobs:
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
           sudo service docker start
           docker-compose -f bahmni-package/bahmni-docker/docker-compose.yml up -d
-          cd speech-assistant-package
-          docker-compose up -d
+          docker-compose -f speech-assistant-package/docker-compose.yml up -d
