@@ -31,6 +31,7 @@ jobs:
         run: | 
           sudo ssh -o "StrictHostKeyChecking no" -i "speech-assistant.pem" ec2-user@${{ steps.get-publicDnsName.outputs.publicDnsName }} <<EOF
           cd speech-assistant-package
+          docker-compose down -v
           git pull https://github.com/Bahmni/speech-assistant-package.git
           sh ./scripts/download_models.sh english
           docker-compose pull
