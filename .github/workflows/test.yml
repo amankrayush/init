@@ -29,5 +29,3 @@ jobs:
         id: get-publicIpAddress
       - name: print public ip address
         run: echo ${{ steps.get-publicIpAddress.outputs.publicIpAddress }}
-      - name: public ip address
-        run: echo ${{Comment.Changes.ResourceRecordSet.ResourceRecords.Value}}
