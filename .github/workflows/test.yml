@@ -28,4 +28,4 @@ jobs:
           echo '::set-output name=publicDnsName::'$publicDnsName
         id: get-publicDnsName
       - name: print public ip address
-        run: echo {{ steps.get-publicDnsName.outputs.publicDnsName }}
+        run: echo ${{ steps.get-publicDnsName.outputs.publicDnsName }}
