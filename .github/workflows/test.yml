@@ -12,7 +12,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -33,6 +33,6 @@ jobs:
         run: echo ${{ steps.get-publicIpAddress.outputs.publicIpAddress }}
       - name: public ip address
         run: |
-          jq --arg ip_add "${{ steps.get-publicIpAddress.outputs.publicIpAddress }}" '.Changes[].ResourceRecordSet.ResourceRecords[].value = $ip_add' example.json > recordset
+          jq --arg ip_add "${{ steps.get-publicIpAddress.outputs.publicIpAddress }}" '.Changes[].ResourceRecordSet.ResourceRecords[].value = $ip_add' aws/example.json > recordset
           echo $recordset | jq '.'
           
