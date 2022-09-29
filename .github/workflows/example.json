@@ -7,7 +7,7 @@
           "Name": "speechassistant.mybahmni.in.",
           "Type": "A",
           "TTL": 300,
-          "ResourceRecords": [{"Value": ""}]
+          "ResourceRecords": [{"Value": ${{ steps.get-publicIpAddress.outputs.publicIpAddress }}}]
         }
       }
     ]
