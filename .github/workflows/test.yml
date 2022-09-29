@@ -30,4 +30,7 @@ jobs:
       - name: print public ip address
         run: echo ${{ steps.get-publicIpAddress.outputs.publicIpAddress }}
       - name: public ip address
-        run: echo ${{ip}}
+        run: |
+          jq --arg ip_add "${{ steps.get-publicIpAddress.outputs.publicIpAddress }}" '.Changes[].ResourceRecordSet.ResourceRecords[].value = $ip_add' example.json > recordset
+          echo $recordset | jq '.'
+          
