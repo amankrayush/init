@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       sa_enable:
-        description: 'Load SA App'
+        description: 'SA App'
         required: true
         default: 'true'
 
