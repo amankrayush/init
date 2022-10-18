@@ -1,8 +1,8 @@
-name: Deploy Speech-Assistant-Package
-on:
-  push:
-    branches:
-      - main
+# name: Deploy Speech-Assistant-Package
+# on:
+#   push:
+#     branches:
+#       - main
 
 # jobs:
 #   deploy:
