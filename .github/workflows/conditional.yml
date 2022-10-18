@@ -2,7 +2,7 @@ name : Test
 on:
   push:
     branches: 
-      - main
+      - feature-1
   workflow_dispatch:
     inputs:
       sa_enable:
