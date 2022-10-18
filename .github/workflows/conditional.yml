@@ -1,8 +1,5 @@
 name : Test
 on:
-  push:
-    branches: 
-      - feature-1
   workflow_dispatch:
     inputs:
       sa_enable:
