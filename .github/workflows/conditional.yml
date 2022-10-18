@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       sa_enable:
-        description: 'SA App'
+        description: 'Load SA App'
         required: true
         default: 'true'
 
@@ -17,5 +17,8 @@ jobs:
     steps:
       - if: github.event.inputs.sa_enable == 'true'
         name: Load SA App
-        run: echo "I am Happy"
+        run: echo "yarn build"
+      - if: github.event.inputs.sa_enable == 'true'
+        name: Load SA App
+        run: echo "yarn build:Disabled"
         
