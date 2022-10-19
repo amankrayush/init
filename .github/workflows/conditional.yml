@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: print
         run: echo "${{github.event.inputs.sa_enable}}"
-      - if: github.event.inputs.sa_enable == 'true'
+      - if: github.event.inputs.sa_enable == ''
         name: Load SA App
         run: echo "yarn build"
       - if: github.event.inputs.sa_enable == 'false'
