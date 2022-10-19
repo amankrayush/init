@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ${{github.event.inputs.sa_enable}}
+      - name: print
+        run: echo ${{github.event.inputs.sa_enable}}
       - if: github.event.inputs.sa_enable == 'true'
         name: Load SA App
         run: echo "yarn build"
