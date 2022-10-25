@@ -9,6 +9,15 @@ on:
         description: 'Load SA App'
         required: true
         default: 'true'
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning' 
+        type: choice
+        options:
+        - info
+        - warning
+        - debug 
 
 jobs:
   build_web:
