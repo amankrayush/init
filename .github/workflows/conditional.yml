@@ -5,19 +5,14 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      sa_enable:
+      ssa_enable:
         description: 'Load SA App'
         required: true
         default: 'true'
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning' 
         type: choice
         options:
-        - info
-        - warning
-        - debug 
+        - 'true'
+        - 'false'
 
 jobs:
   build_web:
