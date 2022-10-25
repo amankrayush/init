@@ -13,6 +13,10 @@ on:
         options:
         - 'true'
         - 'false'
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true 
+        type: boolean
 
 jobs:
   build_web:
