@@ -5,7 +5,7 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      ssa_enable:
+      sa_enable:
         description: 'Load SA App'
         required: true
         default: 'true'
